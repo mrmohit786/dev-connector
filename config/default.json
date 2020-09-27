@@ -1,0 +1,4 @@
+{
+    "mongoDB": "mongodb+srv://admin:warrior786@cluster0.izcux.mongodb.net/devconnector?retryWrites=true&w=majority",
+    "jwtSecret": "jwtSecretToken"
+}
