@@ -1,11 +1,15 @@
 const express = require("express");
 const Profile = require("../../models/Profile");
 const user = require("../../models/User");
+const request = require("request");
+const config = require("config");
+
 const auth = require("../../middleware/auth");
-const { check, validationResult } = require("express-validator");
+const { check, validationResult, body } = require("express-validator");
 const User = require("../../models/User");
 const router = express.Router();
 
+//NOTE
 //@route  GET api/profile/me
 //@desc   get profile by auth token
 //@access Private
@@ -25,6 +29,7 @@ router.get("/me", auth, async (req, res) => {
   }
 });
 
+//NOTE
 //@route  POST api/profile/me
 //@desc   create profile for user by authenticate auth token
 //@access Private
@@ -103,6 +108,7 @@ router.post(
   }
 );
 
+//NOTE
 //@route  GET api/profile/
 //@desc   get all users profile
 //@access Public
@@ -140,6 +146,7 @@ router.get("/user/:user_id", async (req, res) => {
   }
 });
 
+//NOTE
 //@route  DELETE api/profile
 //@desc   delete user
 //@access Private
@@ -158,6 +165,7 @@ router.delete("/", auth, async (req, res) => {
   }
 });
 
+//NOTE
 //@route  PUT api/profile/experience
 //@desc   add experience in user's profile
 //@access Private
@@ -210,6 +218,7 @@ router.put(
   }
 );
 
+//NOTE
 //@route  DELETE api/profile/experience/:experience_id
 //@desc   delete experience in user's profile
 //@access Private
@@ -229,6 +238,7 @@ router.delete("/experience/:experience_id", auth, async (req, res) => {
   }
 });
 
+//NOTE
 //@route  PUT api/profile/education
 //@desc   add education in user's profile
 //@access Private
@@ -282,7 +292,8 @@ router.put(
   }
 );
 
-//@route  DELETE api/education/:education_id
+//NOTE
+//@route  DELETE api/profile/education/:education_id
 //@desc   delete education in user's profile
 //@access Private
 router.delete("/education/:education_id", auth, async (req, res) => {
@@ -295,6 +306,39 @@ router.delete("/education/:education_id", auth, async (req, res) => {
     await profile.save();
 
     res.json(profile);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+//NOTE
+//@route  GET api/profile/github/:username
+//@desc   Get user repos from Github
+//@access Public
+router.get("/github/:username", async (req, res) => {
+  try {
+    const options = {
+      url: `https://api.github.com/users/${
+        req.params.username
+      }/repos?per_page=5&sort=created:asc&client_id=${config.get(
+        "githubClientId"
+      )}&client_secret=${config.get("githubSecret")}`,
+      method: "GET",
+      headers: { "user-agent": "node.js" },
+    };
+
+    request(options, (error, response, body) => {
+      if (error) {
+        console.error(error);
+      }
+
+      if (response.statusCode !== 200) {
+        return res.status(400).json({ msg: "No Github profile found" });
+      }
+
+      res.json(JSON.parse(body));
+    });
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Server Error");
