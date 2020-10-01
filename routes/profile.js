@@ -1,12 +1,12 @@
 const express = require("express");
-const Profile = require("../../models/Profile");
-const user = require("../../models/User");
+const Profile = require("../models/Profile");
+const user = require("../models/User");
 const request = require("request");
 const config = require("config");
 
-const auth = require("../../middleware/auth");
+const auth = require("../middleware/auth");
 const { check, validationResult, body } = require("express-validator");
-const User = require("../../models/User");
+const User = require("../models/User");
 const router = express.Router();
 
 //NOTE

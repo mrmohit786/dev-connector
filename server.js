@@ -2,10 +2,10 @@ const express = require("express");
 const connectDB = require("./config/db");
 
 //import routes
-const userRoutes = require("./routes/api/user");
-const profileRoutes = require("./routes/api/profile");
-const postsRoutes = require("./routes/api/posts");
-const authRoutes = require("./routes/api/auth");
+const userRoutes = require("./routes/user");
+const profileRoutes = require("./routes/profile");
+const postsRoutes = require("./routes/posts");
+const authRoutes = require("./routes/auth");
 
 //intialize express
 const app = express();
