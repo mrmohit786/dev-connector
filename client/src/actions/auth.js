@@ -9,6 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   LOGOUT,
+  CLEAR_PROFILE,
 } from "./types";
 
 //load user
@@ -18,7 +19,7 @@ export const loadUser = (token) => async (dispatch) => {
   }
 
   try {
-    const res = axios.get("/api/auth", token);
+    const res = await axios.get("/api/auth", token);
 
     dispatch({
       type: USER_LOADED,
@@ -93,9 +94,12 @@ export const login = ({ email, password }) => async (dispatch) => {
   }
 };
 
-//login user
+//logout user
 export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
+  });
+  dispatch({
+    type: CLEAR_PROFILE,
   });
 };

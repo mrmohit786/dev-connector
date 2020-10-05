@@ -1,0 +1,6 @@
+{
+  "mongoDB": "mongodb+srv://admin:warrior786@cluster0.izcux.mongodb.net/devconnector?retryWrites=true&w=majority",
+  "jwtSecret": "jwtSecretToken",
+  "githubClientId": "3dda4be9ba18c829838c",
+  "githubSecret": "c5383f6db26cf90d8488b79b6b7a3f195888e8d5"
+}

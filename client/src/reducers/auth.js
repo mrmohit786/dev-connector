@@ -24,15 +24,20 @@ export default function (state = initialState, action) {
       localStorage.setItem("token", payload.token);
       return { ...state, ...payload, isAuthenticated: true, loading: false };
 
+    case LOGOUT:
     case AUTHENTICATION_FAILED:
     case AUTH_ERROR:
     case LOGIN_FAILED:
-    case LOGOUT:
       localStorage.removeItem("token");
       return { ...state, token: null, isAuthenticated: false, loading: false };
 
     case USER_LOADED:
-      return { ...state, ...payload, isAuthenticated: true, loading: false };
+      return {
+        ...state,
+        ...payload,
+        isAuthenticated: true,
+        loading: false,
+      };
 
     default:
       return state;
